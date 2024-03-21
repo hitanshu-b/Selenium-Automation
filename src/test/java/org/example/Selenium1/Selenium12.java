@@ -30,6 +30,7 @@ public class Selenium12 {
 
         System.out.println(getPartialLink.getAttribute("href"));
         getPartialLink.click();
+
         driver.close();
     }
 
