@@ -25,7 +25,7 @@ public class Selenium26 {
     }
 
     @Test
-    @Description("Checkboxes    ")
+    @Description("Checkboxes")
     public void testCheckbox() throws InterruptedException {
         driver.get("https://the-internet.herokuapp.com/checkboxes");
         List<WebElement> checkboxes = driver.findElements(By.xpath("//input[@type='checkbox']"));
