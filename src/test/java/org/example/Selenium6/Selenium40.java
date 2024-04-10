@@ -1,4 +1,4 @@
-package org.example.Selenium5;
+package org.example.Selenium6;
 
 import io.qameta.allure.Description;
 import org.openqa.selenium.By;
@@ -9,9 +9,9 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-import java.util.List;
+import java.util.Set;
 
-public class Selenium35 {
+public class Selenium40 {
 
     EdgeDriver driver;
 
@@ -23,28 +23,35 @@ public class Selenium35 {
     }
 
     @Test
-    @Description("Action Class Demo")
-    public void actionClassDemo() throws InterruptedException {
-        driver.get("https://www.makemytrip.com/");
-
+    @Description("Windows Demo")
+    public void windowDemo() throws InterruptedException {
         driver.get("https://app.vwo.com/#/test/ab/13/heatmaps/1?token=eyJhY2NvdW50X2lkIjo2NjY0MDAsImV4cGVyaW1lbnRfaWQiOjEzLCJjcmVhdGVkX29uIjoxNjcxMjA1MDUwLCJ0eXBlIjoiY2FtcGFpZ24iLCJ2ZXJzaW9uIjoxLCJoYXNoIjoiY2IwNzBiYTc5MDM1MDI2N2QxNTM5MTBhZDE1MGU1YTUiLCJzY29wZSI6IiIsImZybiI6ZmFsc2V9&isHttpsOnly=1");
 
-        driver.manage().window().maximize();
+        String windowHandle = driver.getWindowHandle();
+        System.out.println("Before: "+windowHandle);
 
-        Thread.sleep(5000);
+        Actions ac = new Actions(driver);
+        ac.moveToElement(driver.findElement(By.xpath("//div[@data-qa=\"meqeqiwiwe\"]"))).click();
 
-        List<WebElement> list_heatmaps = driver.findElements(By.cssSelector("[data-qa=\"yedexafobi\"]"));
-        // list_heatmaps.get(1).click();
-        Actions actions = new Actions(driver);
-        actions.moveToElement(list_heatmaps.get(1)).click().build().perform();
-        Thread.sleep(13000);
+        Set<String> windowManager = driver.getWindowHandles();
+        System.out.println(windowManager);
+
+        for(String e : windowManager){
+            driver.switchTo().window(e);
+            System.out.println(e);
+        }
+        if(driver.getPageSource().contains("New Window")){
+            System.out.println("Passed");
+        }
+        driver.switchTo().window(windowHandle);
+        Thread.sleep(4000);
 
     }
 
     @AfterTest
     @Description("Close the browser")
     public void closeBrowser(){
-        driver.close();
+        driver.quit();  
     }
 
 }
